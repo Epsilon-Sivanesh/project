@@ -12,7 +12,7 @@ function StyledApp() {
   return (
     <Provider store={store}>
       <App />
-    </Provider>);
+    </Provider>)
 }
 ReactDOM.render(
   <StyledApp />,
