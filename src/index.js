@@ -4,13 +4,18 @@ import './index.css';
 import App from './epsilon/app';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import { store } from "./epsilon/store";
 
-
+function StyledApp() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>);
+}
 ReactDOM.render(
-   <App />,
+  <StyledApp />,
   document.getElementById('root')
 );
 

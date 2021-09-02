@@ -1,51 +1,66 @@
-export default function Corousel({state}){
-    return(
-        <>
-                    <div className='mt-3 container border-bottom'>
-                <h1>Related Items</h1>
-                <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
-  <div className="carousel-inner">
-  {
-                    state&&state.map((a,i)=>(
-                        (i===0&&
-                            <div className="carousel-item active">
-                               <img src={a.image} className="d-block w" alt="img"/>
-      <p>{a.title}</p>
-      <p className='fw-bold text-primary'>{a.points.basePointsToCharge} Points</p>  
-    </div>  
-     )   ||
-      <div className="carousel-item">
-      <img src={a.image} className="d-block w" alt="img"/>
-      <p>{a.title}</p>
-      <p className='fw-bold text-primary'>{a.points.basePointsToCharge} Points</p>  </div>
-
-                 ))
-                }
-  </div>
-</div>
+import { connect } from "react-redux";
+function Corousel(props) {
+  var val = [];
+  let n = 0;
+  for (let i = 0; i < 6; i++) {
+    val.push(n);
+    n += 3
+  }
+  return (
+    <>
+      <h1 className='container mt-3'>Related Items</h1>
+      <div className='pic-ctn border-bottom container'>
+        {props.state.data && val && val.map((i) =>
+        (
+          <div className='pic d-flex  text-center '>
+            <div>
+              <img src={props.state.data[i].image} alt='img' className='w-100' />
+              <p>{props.state.data[i].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i].points.basePointsToCharge}</p>
             </div>
-            <div className='mt-3 container'>
-                <h1>Recently Viewed Items</h1>
-                <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
-  <div className="carousel-inner">
-  {
-                    state&&state.map((a,i)=>(
-                        (i===0&&
-                            <div className="carousel-item active">
-      <img src={a.image} className="d-block w" alt="img"/>
-      <p>{a.title}</p>
-      <p className='fw-bold text-primary'>{a.points.basePointsToCharge} Points</p>
-    </div>   )   ||
-      <div className="carousel-item">
-      <img src={a.image} className="d-block w" alt="img"/>
-      <p>{a.title}</p>
-      <p className='fw-bold text-primary'>{a.points.basePointsToCharge} Points</p>
-    </div>   
-                 ))
-                }
-  </div>
-</div>
+            <div>
+              <img src={props.state.data[i + 1].image} alt='img' className='w-100' />
+              <p>{props.state.data[i + 1].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i + 1].points.basePointsToCharge}</p>
             </div>
-        </>
-    )
+            <div>
+              <img src={props.state.data[i + 2].image} alt='img' className='w-100' />
+              <p>{props.state.data[i + 2].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i + 2].points.basePointsToCharge}</p>
+            </div>
+          </div>
+        ))
+        }
+      </div>
+      <h1 className='container mt-3'>Recently Viewed Items</h1>
+      <div className='pic-ctn'>
+        {props.state.data && val && val.map((i) =>
+        (
+          <div className='pic d-flex  text-center'>
+            <div>
+              <img src={props.state.data[i].image} alt='img' className='w-100' />
+              <p>{props.state.data[i].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i].points.basePointsToCharge}</p>
+            </div>
+            <div>
+              <img src={props.state.data[i + 1].image} alt='img' className='w-100' />
+              <p>{props.state.data[i + 1].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i + 1].points.basePointsToCharge}</p>
+            </div>
+            <div>
+              <img src={props.state.data[i + 2].image} alt='img' className='w-100' />
+              <p>{props.state.data[i + 2].brand}</p>
+              <p className='fw-bold text-primary'>{props.state.data[i + 2].points.basePointsToCharge}</p>
+            </div>
+          </div>
+        ))
+        }
+      </div>
+    </>
+  )
 }
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+export default connect(mapStateToProps)(Corousel);

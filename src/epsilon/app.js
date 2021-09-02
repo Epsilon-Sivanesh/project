@@ -1,8 +1,5 @@
 import './app.css'
-import img1 from './Assets/Group 4.png'
-import img2 from './Assets/Group 5.png'
-import img3 from './Assets/Group 3.png'
-import img4 from './Assets/Group 1.png'
+import React from 'react'
 import Pagination from './pagination'
 import Data from './data'
 import Header from './header'
@@ -14,39 +11,50 @@ import Placeholder from './placeholder'
 
 import './fontawesome-free-5.15.3-web/css/all.css'
 import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { Provider } from "react-redux";
+import { store } from "./store";
+
+const App = (props) => {
+  const [page, setPage] = useState(1)
+  useEffect(() => {
+    fetch('https://eps-gigya.herokuapp.com/rewardProducts')
+      .then(x => x.json())
+      .then(payload => props.dispatch({ type: 'data', payload }))
+      .then(end => {
+        const indexLastPost = page * props.state.dataPerPage;
+        const indexFirstpost = indexLastPost - props.state.dataPerPage;
+        let currentpost = end.payload.slice(indexFirstpost, indexLastPost);
+        props.dispatch({ type: 'post', currentpost })
+        const paginate = (number) => {
+          setPage(number)
+        }
+        props.dispatch({ type: 'paginate', paginate })
+      })
+  }, [])
 
 
-export default function App(){
-    const [state,setState]=useState()
-    const [page,setPage]=useState(1)
-    const [dataPerPage]=useState(6)
-    useEffect(()=>{
-        fetch('https://eps-gigya.herokuapp.com/rewardProducts')
-        .then(x=>x.json())
-        .then(setState)
-    },[])
-    const indexLastPost=page*dataPerPage;
-    const indexFirstpost=indexLastPost-dataPerPage;
-    let currentpost;
-    if(state){
-    currentpost=state.slice(indexFirstpost,indexLastPost);}
 
-    function paginate(number){
-      setPage(number)
-    }
-    return(
-        <>
-        <Header img1={img1} img2={img2} img3={img3} img4={img4}/> 
-        <Camera />
-        <Placeholder/>
-            {
-              state&&<>
-              <Data posts={currentpost}/>
-            <Pagination dataPerPage={dataPerPage} totalData={state.length} paginate={paginate}/></>
-            }
-            <Pager/>
-            <Corousel state={state}/>
-            <Footer img2={img2}/>
-         </>
-    )
+
+  return (
+    <Provider store={store}>
+      <Header />
+      <Camera />
+      <Placeholder />
+      <Data />
+      <Pagination />
+      <Pager />
+      <Corousel />
+      <Footer />
+    </Provider>
+  )
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch }
+}
+const mapStateToProps = (state) => {
+  return { state }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
