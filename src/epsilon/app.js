@@ -12,8 +12,7 @@ import Placeholder from './placeholder'
 import './fontawesome-free-5.15.3-web/css/all.css'
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { Provider } from "react-redux";
-import { store } from "./store";
+
 
 const App = (props) => {
   const [page, setPage] = useState(1)
@@ -37,7 +36,7 @@ const App = (props) => {
 
 
   return (
-    <Provider store={store}>
+    <>
       <Header />
       <Camera />
       <Placeholder />
@@ -46,7 +45,7 @@ const App = (props) => {
       <Pager />
       <Corousel />
       <Footer />
-    </Provider>
+    </>
   )
 }
 
