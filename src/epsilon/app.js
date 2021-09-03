@@ -30,7 +30,7 @@ const App = (props) => {
         }
         props.dispatch({ type: 'paginate', paginate })
       })
-  }, [])
+  }, [page])
 
 
 
