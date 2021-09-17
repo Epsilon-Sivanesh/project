@@ -28,29 +28,6 @@
     row-gap: 50px;
 }
 
-@media (max-width:576px){
-    .p1{
-        width:180px;
-        height: 75px;
-    }
-    .flex{
-        gap:10px;
-    }
-} 
-.w{
-    width: 50%;
-}
-@media(min-width:768px){
-    .w{
-        width: 25%;
-    }
-    .data{
-        gap: 30px;
-    }
-    .cardW{
-        width: 45%;
-    }
-}
 
 #plus{
 margin-left: 1%;
@@ -140,11 +117,7 @@ bottom: 2px;
   .pic:nth-child(6) {
     animation-delay: 10s;
   }
- @media(max-width:618px){
-     .pic-ctn{
-         height: 15rem;
-     }
- }
+
  @media(max-width:768px){
    .cardW{
      text-align: center;
@@ -153,8 +126,42 @@ bottom: 2px;
      margin-left: 40%;
    }
  }
+ @media(max-width:618px){
+  .pic-ctn{
+      height: 15rem;
+  }
+}
+@media (max-width:576px){
+  .p1{
+      width:180px;
+      height: 75px;
+  }
+  .flex{
+      gap:10px;
+  }
+} 
+.w{
+  width: 50%;
+}
+
+@media(max-width:380px){
+  #root div div .text-center:nth-child(1){
+    display: none;
+  }
+}
  @media (min-width:618px) and (max-width:850px) {
     .pic-ctn{
         height: 19rem;
     }
  }
+ @media(min-width:768px){
+  .w{
+      width: 25%;
+  }
+  .data{
+      gap: 30px;
+  }
+  .cardW{
+      width: 45%;
+  }
+}
