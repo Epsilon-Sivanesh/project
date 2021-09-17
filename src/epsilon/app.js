@@ -16,24 +16,30 @@ import { connect } from 'react-redux'
 
 const App = (props) => {
   const [page, setPage] = useState(1)
+  const [post, setPost] = useState()
   useEffect(() => {
     fetch('https://eps-gigya.herokuapp.com/rewardProducts')
       .then(x => x.json())
-      .then(payload => props.dispatch({ type: 'data', payload }))
-      .then(end => {
-        const indexLastPost = page * props.state.dataPerPage;
-        const indexFirstpost = indexLastPost - props.state.dataPerPage;
-        let currentpost = end.payload.slice(indexFirstpost, indexLastPost);
-        props.dispatch({ type: 'post', currentpost })
+      .then(payload => {
+        props.dispatch({ type: 'data', payload });
+        setPost(payload);
+        let currentpost = payload.slice(1, 1 + props.state.dataPerPage);
+        props.dispatch({ type: 'post', currentpost });
         const paginate = (number) => {
           setPage(number)
         }
         props.dispatch({ type: 'paginate', paginate })
       })
+  }, [])
+
+  useEffect(() => {
+    if (post) {
+      const indexLastPost = page * props.state.dataPerPage;
+      const indexFirstpost = indexLastPost - props.state.dataPerPage;
+      let currentpost = post.slice(indexFirstpost, indexLastPost);
+      props.dispatch({ type: 'post', currentpost })
+    }
   }, [page])
-
-
-
 
   return (
     <>
