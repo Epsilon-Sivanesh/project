@@ -14,52 +14,50 @@ import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 
-const App = (props) => {
+const App=(props)=> {
   const [page, setPage] = useState(1)
-  const [post, setPost] = useState()
-  useEffect(() => {
-    fetch('https://eps-gigya.herokuapp.com/rewardProducts')
-      .then(x => x.json())
-      .then(payload => {
-        props.dispatch({ type: 'data', payload });
-        setPost(payload);
-        let currentpost = payload.slice(1, 1 + props.state.dataPerPage);
-        props.dispatch({ type: 'post', currentpost });
-        const paginate = (number) => {
-          setPage(number)
-        }
-        props.dispatch({ type: 'paginate', paginate })
+  const [post,setPost]=useState()
+    useEffect(() => {
+      fetch('https://eps-gigya.herokuapp.com/rewardProducts')
+        .then(x => x.json())
+        .then(payload=>{
+          props.dispatch({type:'data',payload});
+          setPost(payload);
+          let  currentpost=payload.slice(1, 1+props.state.dataPerPage);
+          props.dispatch({type:'post',currentpost});
+          const paginate=(number)=>{
+            setPage(number)
+          }
+          props.dispatch({type:'paginate',paginate})
       })
-  }, [])
-
-  useEffect(() => {
-    if (post) {
+    },[])
+    useEffect(()=>{
+      if(post){
       const indexLastPost = page * props.state.dataPerPage;
-      const indexFirstpost = indexLastPost - props.state.dataPerPage;
-      let currentpost = post.slice(indexFirstpost, indexLastPost);
-      props.dispatch({ type: 'post', currentpost })
-    }
-  }, [page])
+          const indexFirstpost = indexLastPost - props.state.dataPerPage;
+           let  currentpost=post.slice(indexFirstpost, indexLastPost);
+           props.dispatch({type:'post',currentpost})}
+    },[page])
 
   return (
-    <>
+<>
       <Header />
       <Camera />
       <Placeholder />
-      <Data />
-      <Pagination />
+          <Data  />
+          <Pagination />
       <Pager />
-      <Corousel />
-      <Footer />
-    </>
+      <Corousel/>
+      <Footer  /></>
   )
 }
 
 
 const mapDispatchToProps = (dispatch) => {
-  return { dispatch }
+  return {dispatch}
 }
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps=(state)=>{
+  return {state}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
+
